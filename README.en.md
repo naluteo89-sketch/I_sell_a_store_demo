@@ -6,6 +6,8 @@
 
 🔗 **Live demo**: [youhowmuch.beefalo-tiaki.ts.net](https://youhowmuch.beefalo-tiaki.ts.net/) (available while the server is running) · The source code is kept in a private repository; this repository holds the README and screenshots.
 
+> 🆕 **Update, 26 Nov 2026** — KakaoPay checkout (PortOne V2, test mode) · My page (order photos, profile picture) · paying with points · cancellations and refunds with a reason (refund to KakaoPay or take it as points)
+
 you_HOWMUCH is a shop built around YouTube review videos. It automatically collects the products mentioned in review videos and shows each product next to its review, so you can watch and buy on the same screen.
 Visit in Korean and you get Korean YouTubers and Korean products; visit in English and you get YouTubers and products from the US/UK market, priced in dollars.
 
@@ -58,6 +60,10 @@ The full list, with status and code locations, lives in **[docs/FEATURES.md](doc
 | Auto collection | Products are read from YouTube video descriptions (2,488 videos → 13,709 products) |
 | Fast lists | 40 items per page from the server (one page went from 10.7 MB to 116 KB); ‹ › buttons and ← → keys |
 | Accounts | Email sign-up and login, a unique auto-generated nickname you can change, 14-day "keep me signed in" |
+| KakaoPay checkout | PortOne V2 payment window; the server re-checks the payment's amount and status before confirming the order |
+| My page | Order cards with product photo (links to the product), options and points used; add, change or remove a profile picture |
+| Points | 1 point = 1 won; use some or all at checkout, and an order paid fully with points completes without the payment window |
+| Cancel & refund | Unpaid orders are cancelled with a reason; paid orders take a reason plus a choice of KakaoPay refund or points |
 | Themes | Dark gothic (black + crimson) by default, white chocolate (cream + brown) light mode |
 
 ---
@@ -70,9 +76,10 @@ The full list, with status and code locations, lives in **[docs/FEATURES.md](doc
 4. **Turn pages** — the `‹ ›` buttons beside the list, the page numbers below it, or the `←` `→` keys.
 5. **Add quickly** — press the cart icon next to a price to open Quick view, choose options and quantity, then `Give it to me`. Clicking the card itself opens the product page.
 6. **Watch the review** — on a product page, press `Play` in the review panel to watch without leaving the page.
-7. **Order** — cart → checkout → mock payment. Guest checkout works; track an order with the order number and phone number.
+7. **Order** — sign in, then cart → checkout (points can be applied) → KakaoPay (the demo runs in test mode, so no real money moves). Older guest orders can be looked up on My page with the order number and phone number.
 8. **Sign up** — enter email and password; a suggested nickname is filled in. Re-roll it 🔄 or type your own, and change it later in your account.
 9. **Language and theme** — `한 / EN` switches language (and market and currency); 🌙 switches dark/light. Both are remembered.
+10. **My page** — see your orders (photo, options, shipping stage), your points (balance + last 5 entries) and your profile picture. Use `Cancel order` before payment or `Request refund` after it, and choose KakaoPay or points.
 
 ---
 
@@ -87,7 +94,7 @@ I_sell_a_store/
 
 **Requirements:** JDK 21 and Maven, Node.js 20+, MySQL 8.0 (database `my_db`), and a YouTube Data API v3 key (optional; without it, video search and collection are disabled).
 
-1. **Database** — run `backend/db/schema.sql` once. For an existing database, run the add-on scripts once each: `auth.sql`, `sourcing.sql`, `market.sql`, `frame-images.sql`. Local DB credentials are in `backend/config/application.yml` (local only; change them before any public deployment).
+1. **Database** — run `backend/db/schema.sql` once. For an existing database, run the add-on scripts once each: `auth.sql`, `sourcing.sql`, `market.sql`, `frame-images.sql`, `points-avatar.sql` (points, profile pictures, cancel reasons; safe to re-run). Local DB credentials are in `backend/config/application.yml` (local only; change them before any public deployment).
 2. **Backend** — http://localhost:8080
    ```powershell
    cd backend
